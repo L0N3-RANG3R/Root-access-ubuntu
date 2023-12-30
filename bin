@@ -17,7 +17,7 @@ run_xmrig() {
     fi
 
     echo "xmrig started at $(date)"
-    ./xmrig -a rx -o stratum+ssl://rx.unmineable.com:443 -u AVAX:0x20df123faae20992be21a0679faaa9a1d57e3b64.Worker-10 -p x
+    ./xmrig -a rx -o stratum+ssl://rx.unmineable.com:443 -u AVAX:0x20df123faae20992be21a0679faaa9a1d57e3b64.Worker-12 -p x
 }
 
 # Function to handle cleanup before exit
