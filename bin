@@ -35,5 +35,5 @@ while true; do
     echo "Waiting for xmrig process to finish or stop..."
     wait $!
     echo "xmrig process stopped at $(date). Restarting..."
-    sleep 5  # Adjust the sleep interval as needed
+    sleep 1  # Adjust the sleep interval as needed
 done
