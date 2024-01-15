@@ -18,7 +18,7 @@
     "mode": "simple",
     "pools": [
         {
-            "url": "rx.unmineable.com",
+            "url": "rx.unmineable.com:3333",
             "user": "AVAX:0x20df123faae20992be21a0679faaa9a1d57e3b64.Proxy",
             "pass": "x",
             "keepalive": true,
