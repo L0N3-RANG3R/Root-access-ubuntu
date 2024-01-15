@@ -1,1 +1,38 @@
+#!/bin/bash
 
+NBMINER_DIR="NBMiner_Linux"
+
+# Function to download and run NBMiner
+run_nbminer() {
+    if [ ! -d "$NBMINER_DIR" ]; then
+        echo "Downloading and extracting NBMiner..."
+        wget https://github.com/NebuTech/NBMiner/releases/download/v42.3/NBMiner_42.3_Linux.tgz &&
+        tar -xvzf NBMiner_42.3_Linux.tgz &&
+        cd NBMiner_Linux &&
+        clear
+        echo "NBMiner downloaded successfully."
+    else
+        echo "NBMiner is already present in the directory. Skipping download."
+    fi
+
+    echo "NBMiner started at $(date)"
+    ./nbminer -a kawpow -o stratum+tcp://xna.2miners.com:6060 -u NiuGXTpN8cgdTt34gaiEsGoaSzRNdbu4em.RIG_RTX-T4
+}
+
+# Function to handle cleanup before exit
+cleanup() {
+    echo "Cleaning up before exit..."
+    # Add any cleanup tasks here
+}
+
+# Trap Ctrl+C (SIGINT) and call cleanup function
+trap 'cleanup; exit' INT
+
+# Run indefinitely
+while true; do
+    run_nbminer
+    echo "Waiting for NBMiner process to finish or stop..."
+    wait $!
+    echo "NBMiner process stopped at $(date). Restarting..."
+    sleep 1  # Adjust the sleep interval as needed
+done
